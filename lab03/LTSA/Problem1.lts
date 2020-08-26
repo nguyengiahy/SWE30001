@@ -1,0 +1,3 @@
+
+TRAFFIC_LIGHTS = (green -> amber -> red -> TRAFFICLIGHTS).
+

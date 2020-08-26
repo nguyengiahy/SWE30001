@@ -1,0 +1,4 @@
+
+TRAFFIC_LIGHTS = (green -> amber -> red -> TRAFFIC_LIGHTS).
+
+||INTERSECTION = (north:TRAFFIC_LIGHTS || east:TRAFFIC_LIGHTS).

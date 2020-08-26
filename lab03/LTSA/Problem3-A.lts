@@ -1,0 +1,10 @@
+
+TRAFFIC_LIGHTS = (green -> amber -> red -> TRAFFIC_LIGHTS).
+
+LANE = (acquire -> clear -> wait -> LANE).
+
+||INTERSECTION = (north:TRAFFIC_LIGHTS || east:TRAFFIC_LIGHTS || {north,east}::(LANE
+      /{ green/acquire,
+         amber/clear,
+         red/wait
+         })).
