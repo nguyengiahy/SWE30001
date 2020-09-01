@@ -1,0 +1,40 @@
+ENGINE_CONTROL = (engineOn -> ON),
+ON = 
+( 
+	{adjustSpeed, setThrottle, accelerate, brake} -> ON
+|
+	engineOff -> ENGINE_CONTROL
+).	
+
+CRUISE_CONTROL = (engineOn -> ON),
+ON = 
+(
+	setSpeed -> ON
+| 
+	engineOff -> CRUISE_CONTROL
+|
+	on -> THROTTLE
+),
+THROTTLE = 
+(
+	setSpeed -> THROTTLE
+|
+	setThrottle -> THROTTLE
+|
+	engineOff -> CRUISE_CONTROL
+|
+	off -> ON
+| 
+	brake -> SPEED
+),
+SPEED = 
+(
+	setSpeed -> SPEED
+|
+	resume -> THROTTLE
+|
+	engineOff -> CRUISE_CONTROL
+).
+
+||SYSTEM = (ENGINE_CONTROL || CRUISE_CONTROL).
+	

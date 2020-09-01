@@ -1,0 +1,24 @@
+const M = 4
+range R = 0..M
+
+TURNSTILE = ( enableGate -> RUN ),
+RUN = ( {arrive,leave} -> RUN |
+		disableGate -> TURNSTILE).
+
+DIRECTOR = (open -> close -> DIRECTOR).
+
+CONTROLLER = ( open -> OPENED ),
+OPENED = ( enableGate -> OPENNING[0] ),
+OPENNING[r:R] = ( close -> CLOSING[r] |
+				  when (r<M) arrive -> OPENNING[r+1] |
+				  when (r>0) leave -> OPENNING[r-1] ),
+CLOSING[r:R] = ( when (r==0) disableGate -> CONTROLLER |
+				 when (r>0) leave -> CLOSING[r-1] ).
+
+||SUPERMARKET = ( east:TURNSTILE || west:TURNSTILE || DIRECTOR || {west,east}::CONTROLLER)
+				/{
+					enableGate/{east,west}.enableGate,
+					disableGate/{east,west}.disableGate,
+					open/{east,west}.open,
+					close/{east,west}.close
+				}.

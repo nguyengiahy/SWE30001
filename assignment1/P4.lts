@@ -1,0 +1,29 @@
+const M = 4
+range R = 0..M
+
+DIRECTOR = (open -> close -> DIRECTOR).
+
+TURNSTILE = (pass -> TURNSTILE).
+
+CONTROLLER = (open -> START_TURNSTILE),
+START_TURNSTILE = (enableTurnstile -> OPENING[0]),
+OPENING[r:R] = 
+(
+	when (r<M) arrive -> OPENING[r+1]
+|
+	when (r>0) leave -> OPENING[r-1]
+|
+	close -> CLOSING[r]
+),
+CLOSING[r:R] =
+(
+	when (r>0) leave -> CLOSING[r-1]
+|
+	when (r==0) disableTurnstile -> CONTROLLER
+).
+
+||MUSEUM = (entrance:TURNSTILE || exit:TURNSTILE || DIRECTOR || CONTROLLER)
+			/{
+			arrive/entrance.pass,
+			leave/exit.pass
+			}.

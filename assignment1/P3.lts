@@ -1,0 +1,16 @@
+const M = 4
+range R = 0..M
+
+TURNSTILE = (passenger -> TURNSTILE).
+
+CAR = (depart -> CAR).
+
+CONTROL = CONTROL[0],
+CONTROL[r:R] = 
+( 
+	when (r<M) passenger -> CONTROL[r+1]
+|
+	when (r==M) depart -> CONTROL[0]
+).
+
+||ROLLER_COASTER = (TURNSTILE || CAR || CONTROL).
